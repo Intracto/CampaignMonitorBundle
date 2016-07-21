@@ -1,0 +1,25 @@
+services:
+    itr.campaign_monitor.authentication:
+        class: Intracto\CampaignMonitorBundle\Service\Authentication
+        arguments:
+            - '%intracto_campaign_monitor.api_key%'
+
+    itr.campaign_monitor.factory.list_connector:
+        class: Intracto\CampaignMonitorBundle\Service\Connector\ListConnectorFactory
+        arguments:
+            - '@itr.campaign_monitor.authentication'
+
+    itr.campaign_monitor.factory.segment_connector:
+        class: Intracto\CampaignMonitorBundle\Service\Connector\SegmentConnectorFactory
+        arguments:
+            - '@itr.campaign_monitor.authentication'
+
+    itr.campaign_monitor.factory.campaign_connector:
+        class: Intracto\CampaignMonitorBundle\Service\Connector\CampaignConnectorFactory
+        arguments:
+            - '@itr.campaign_monitor.authentication'
+
+    itr.campaign_monitor.factory.client_connector:
+        class: Intracto\CampaignMonitorBundle\Service\Connector\ClientConnectorFactory
+        arguments:
+            - '@itr.campaign_monitor.authentication'
