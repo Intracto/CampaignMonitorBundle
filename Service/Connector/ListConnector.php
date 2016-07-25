@@ -127,6 +127,39 @@ class ListConnector
     }
 
     /**
+     * @param string $email
+     * @param string|null $name Leaving this value to null will not empty the field
+     * @param array $customFields This array should be of following form
+     *      array(
+     *          array(
+     *              'Key' => The custom fields personalisation tag
+     *              'Value' => The value for this subscriber
+     *              'Clear' => true/false (pass true to remove this custom field.
+     *          )
+     *      )
+     * @param bool $resubscribe
+     * @param bool $restartSubscription Set to true to trigger any automated workflows
+     * @return Response
+     */
+    public function updateSubscriber(
+      $email,
+      $name = null,
+      $customFields = [],
+      $resubscribe = false,
+      $restartSubscription = false
+    ) {
+        $response = $this->subscribersConnection->update($email, [
+          'EmailAddress' => $email,
+          'Name' => $name,
+          'CustomFields' => $customFields,
+          'Resubscribe' => $resubscribe,
+          'RestartSubscriptionBasedAutoResponders' => $restartSubscription,
+        ]);
+
+        return new Response($response);
+    }
+
+    /**
      * @param int $page
      * @param int $pageSize
      * @param \DateTime $addedSince The date to start getting subscribers from
