@@ -4,7 +4,7 @@ namespace Intracto\CampaignMonitorBundle\Service\Connector;
 
 use Intracto\CampaignMonitorBundle\Service\Authentication;
 
-class ClientConnectorFactory
+class ClientConnectorFactory implements ConnectorFactory
 {
     /**
      * @var Authentication
