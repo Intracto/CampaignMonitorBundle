@@ -2,9 +2,11 @@
 
 namespace Intracto\CampaignMonitorBundle\Service\Connector;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Intracto\CampaignMonitorBundle\Model\ListDetails;
 use Intracto\CampaignMonitorBundle\Model\Response;
 use Intracto\CampaignMonitorBundle\Model\Subscriber;
+use Intracto\CampaignMonitorBundle\Model\Webhook;
 use Intracto\CampaignMonitorBundle\Service\Authentication;
 use Intracto\CampaignMonitorBundle\Service\Hydrator;
 use Intracto\CampaignMonitorBundle\Service\Paginator;
@@ -286,6 +288,49 @@ class ListConnector
           [$this, __METHOD__],
           [$page + 1, $pageSize, $addedSince, $orderField, $orderDirection]
         );
+    }
+
+    /**
+     * @return WebHook[]|ArrayCollection
+     */
+    public function getWebHooks()
+    {
+        $response = new Response($this->listConnection->get_webhooks());
+        $hydrator = new Hydrator(Webhook::class);
+
+        return $hydrator->hydrateDataSet($response->getContent());
+    }
+
+    /**
+     * @param array $webHook This array should be of following form
+     *      array(
+     *          'Events' => array('Subscribe', 'Update'),
+     *          'Url' => 'http://www.example.com/subscribe'
+     *          'PayloadFormat' => 'json'
+     *      )
+     * @return Response
+     */
+    public function addWebHook(array $webHook)
+    {
+        return new Response($this->listConnection->create_webhook($webHook));
+    }
+
+    /**
+     * @param string $webHookId
+     * @return Response
+     */
+    public function deleteWebHook($webHookId)
+    {
+        return new Response($this->listConnection->delete_webhook($webHookId));
+    }
+
+    /**
+     * @param string $webHookId
+     * @return Response
+     */
+    public function activateWebHook($webHookId)
+    {
+        return new Response($this->listConnection->activate_webhook($webHookId));
     }
 
     /**
