@@ -3,6 +3,7 @@
 namespace Intracto\CampaignMonitorBundle\Service\Connector;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Intracto\CampaignMonitorBundle\Exception\SubscriberNotFound;
 use Intracto\CampaignMonitorBundle\Model\ListDetails;
 use Intracto\CampaignMonitorBundle\Model\Response;
 use Intracto\CampaignMonitorBundle\Model\Subscriber;
@@ -92,10 +93,16 @@ class ListConnector
     /**
      * @param string $email
      * @return Subscriber
+     * @throws SubscriberNotFound
      */
     public function getSubscriber($email)
     {
         $response = new Response($this->subscribersConnection->get($email));
+
+        if ($response->getStatusCode() === 400) {
+            throw new SubscriberNotFound('The subscriber with e-mail ' . $email .' was not found.');
+        }
+
         $hydrator = new Hydrator(Subscriber::class);
 
         return $hydrator->hydrate($response->getContent());
