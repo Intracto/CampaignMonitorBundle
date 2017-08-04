@@ -169,6 +169,41 @@ class ListConnector
     }
 
     /**
+     * @param array $subscribers This array should be of following form
+     *      array(
+     *          array(
+     *              'EmailAddress' => 'subscriber_one@campaignmonitor.com',
+     *              'Name' => 'John Doe',
+     *              'CustomFields' => array(
+     *                  array(
+     *                      'Key' => The custom fields personalisation tag
+     *                      'Value' => The value for this subscriber
+     *                      'Clear' => true/false (pass true to remove this custom field.
+     *                  ),
+     *              ),
+     *          ),
+     *          array(
+     *              'EmailAddress' => 'subscriber_two@campaignmonitor.com',
+     *              'Name' => 'Johny Doe',
+     *          )
+     *      )
+     * @param bool|false $resubscribe
+     * @param bool|false $restartSubscription
+     * @param bool|false $queueSubscriptionBasedAutoResponders
+     * @return Response
+     */
+    public function importSubscribers(
+      array $subscribers,
+      $resubscribe = false,
+      $restartSubscription = false,
+      $queueSubscriptionBasedAutoResponders = false
+    ) {
+        $response = $this->subscribersConnection->import($subscribers, $resubscribe, $queueSubscriptionBasedAutoResponders, $restartSubscription);
+
+        return new Response($response);
+    }
+
+    /**
      * @param int $page
      * @param int $pageSize
      * @param \DateTime $addedSince The date to start getting subscribers from
