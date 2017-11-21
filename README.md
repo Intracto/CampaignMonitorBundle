@@ -1,10 +1,10 @@
-#IntractoCampaignMonitorBundle
+# IntractoCampaignMonitorBundle
 
 Welcome to the IntractoCampaignMonitorBundle - a Symfony wrapper for the Campaign Monitor PHP library.
 
 For details on how to get started with IntractoCampaignMonitorBundle, keep on reading.
 
-##What's inside?
+## What's inside?
 
 The IntractoCampaignMonitorBundle has following features:
 - All results from the API are hydrated to different models.
@@ -13,7 +13,7 @@ The IntractoCampaignMonitorBundle has following features:
 
 All code included in the IntractoCampaignMonitorBundle is released under the MIT or BSD license.
 
-##Installation
+## Installation
 
 ### Step 1 - Install IntractoCampaignMonitorBundle using composer
 Edit your composer.json to include the bundle as a dependency.
@@ -58,7 +58,7 @@ intracto_campaign_monitor:
 
 ```
 
-##Usage
+## Usage
 There are 4 factory services at your disposal.
 
 - itr.campaign_monitor.factory.client_connector
